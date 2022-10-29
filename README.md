@@ -4,7 +4,7 @@
 # Differ (Education project)
 
 ### Description
-It's a primitive program that compares two *flat* jsons and outputs their difference.
+It's a primitive application that compares two *flat* jsons and returns their difference.
 
 ### Example
 [![demo](https://asciinema.org/a/qRHu7BNdJ8Z0LSUdN4V6jbBKP.svg)](https://asciinema.org/a/qRHu7BNdJ8Z0LSUdN4V6jbBKP)
