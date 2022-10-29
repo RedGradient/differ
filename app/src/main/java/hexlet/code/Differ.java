@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Differ {
     public static String differ(String text1, String text2) throws Exception {
-        return getDiff(text1, text2);
+        return generate(text1, text2);
     }
 
     public static String parse(String readFilePath) throws Exception {
@@ -24,7 +24,7 @@ public class Differ {
 
         return Files.readString(path);
     }
-    public static String getDiff(String text1, String text2) throws JsonProcessingException {
+    public static String generate(String text1, String text2) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node1 = objectMapper.readTree(text1);
