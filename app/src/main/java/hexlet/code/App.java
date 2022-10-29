@@ -10,6 +10,7 @@ import java.util.concurrent.Callable;
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
         description = "Compares two configuration files and shows a difference.")
 public class App implements Callable<Integer> {
+    final String abc = "";
 
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
     private String format = "stylish";
@@ -22,7 +23,6 @@ public class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        System.out.println("in try block\n");
 
         var text1 = Differ.parse(filePath1);
         var text2 = Differ.parse(filePath2);
