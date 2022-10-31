@@ -7,7 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 
 public class Differ {
@@ -24,13 +25,14 @@ public class Differ {
 
         return Files.readString(path);
     }
+
     public static String generate(String text1, String text2) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node1 = objectMapper.readTree(text1);
         JsonNode node2 = objectMapper.readTree(text2);
 
-        TreeSet <String> fields = new TreeSet<>();
+        TreeSet<String> fields = new TreeSet<>();
 
         Iterator<String> it1 = node1.fieldNames();
         while (it1.hasNext()) {
@@ -50,7 +52,7 @@ public class Differ {
             } else {
                 var value1 = node1.get(field).toString();
                 var value2 = node2.get(field).toString();
-                if (value1.equals(value2)){
+                if (value1.equals(value2)) {
                     builder.append(String.format("    %s: %s\n", field, node2.get(field).toString()));
                 } else {
                     builder.append(String.format("  - %s: %s\n", field, node1.get(field).toString()));
