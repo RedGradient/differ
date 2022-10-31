@@ -7,13 +7,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 
 public class Differ {
     public static String differ(String text1, String text2) throws Exception {
-        return generate(text1, text2);
+        var diff = generate(text1, text2);
+
+        StringBuilder builder = new StringBuilder("{\n");
+        for (var field : diff.keySet()) {
+            var changes = diff.get(field);
+            for (var sign : changes.keySet()) {
+                var value = changes.get(sign);
+                var line = String.format("  %s %s: %s\n", sign, field, value);
+                builder.append(line);
+            }
+        }
+        builder.append("}");
+        return builder.toString().replace("\"", "");
     }
 
     public static String parse(String readFilePath) throws Exception {
@@ -26,7 +40,8 @@ public class Differ {
         return Files.readString(path);
     }
 
-    public static String generate(String text1, String text2) throws JsonProcessingException {
+    public static TreeMap<String, HashMap<String, String>> generate(String text1, String text2)
+            throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node1 = objectMapper.readTree(text1);
@@ -43,25 +58,27 @@ public class Differ {
             fields.add(it2.next());
         }
 
-        StringBuilder builder = new StringBuilder("{\n");
+        TreeMap<String, HashMap<String, String>> result = new TreeMap<>();
+
         for (var field : fields) {
+            HashMap<String, String> values = new HashMap<>();
+            result.put(field, values);
             if (!node1.has(field)) {
-                builder.append(String.format("  + %s: %s\n", field, node2.get(field).toString()));
+                result.get(field).put("+", node2.get(field).toString());
             } else if (!node2.has(field)) {
-                builder.append(String.format("  - %s: %s\n", field, node1.get(field).toString()));
+                result.get(field).put("-", node1.get(field).toString());
             } else {
                 var value1 = node1.get(field).toString();
                 var value2 = node2.get(field).toString();
                 if (value1.equals(value2)) {
-                    builder.append(String.format("    %s: %s\n", field, node2.get(field).toString()));
+                    result.get(field).put(" ", node2.get(field).toString());
                 } else {
-                    builder.append(String.format("  - %s: %s\n", field, node1.get(field).toString()));
-                    builder.append(String.format("  + %s: %s\n", field, node2.get(field).toString()));
+                    result.get(field).put("-", node1.get(field).toString());
+                    result.get(field).put("+", node2.get(field).toString());
                 }
             }
         }
-        builder.append("}");
 
-        return builder.toString().replace("\"", "");
+        return result;
     }
 }
