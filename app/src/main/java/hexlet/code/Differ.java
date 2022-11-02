@@ -19,6 +19,9 @@ public class Differ {
     private static final int VALUE = 1;
 
     public static String differ(String text1, String text2) throws Exception {
+        if (text1.isEmpty() && text2.isEmpty()) {
+            return "";
+        }
         var diff = generate(text1, text2);
 
         StringBuilder builder = new StringBuilder("{\n");
@@ -39,7 +42,8 @@ public class Differ {
 
         Path path = Paths.get(readFilePath);
         if (!Files.exists(path)) {
-            throw new Exception();
+            var message = String.format("File %s does not exist", path);
+            throw new Exception(message);
         }
 
         return Files.readString(path);

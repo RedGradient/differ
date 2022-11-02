@@ -45,4 +45,17 @@ public class DifferTest {
 
         assertEquals(result, expected);
     }
+
+    @Test
+    public void testDiffWithEmptyText() {
+        String result = null;
+        try {
+            result = Differ.differ("", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert false;
+        }
+
+        assertEquals("", result);
+    }
 }
