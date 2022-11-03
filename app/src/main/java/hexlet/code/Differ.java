@@ -3,10 +3,8 @@ package hexlet.code;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeMap;
@@ -19,6 +17,7 @@ public class Differ {
     private static final int VALUE = 1;
 
     public static String differ(String text1, String text2) throws Exception {
+
         if (text1.isEmpty() && text2.isEmpty()) {
             return "";
         }
@@ -38,21 +37,29 @@ public class Differ {
         return builder.toString().replace("\"", "");
     }
 
-    public static String parse(String readFilePath) throws Exception {
+    private static ObjectMapper getMapper(String text) {
+        ObjectMapper objectMapper;
 
-        Path path = Paths.get(readFilePath);
-        if (!Files.exists(path)) {
-            var message = String.format("File %s does not exist", path);
-            throw new Exception(message);
+        try {
+            objectMapper = new ObjectMapper();
+            objectMapper.readTree(text);
+        } catch (Exception e1) {
+            objectMapper = new YAMLMapper();
+            try {
+                objectMapper.readTree(text);
+            } catch (Exception e2) {
+                objectMapper = null;
+            }
         }
 
-        return Files.readString(path);
+        return objectMapper;
     }
 
-    public static TreeMap<String, LinkedList<String[]>> generate(String text1, String text2)
+    private static TreeMap<String, LinkedList<String[]>> generate(String text1, String text2)
             throws JsonProcessingException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = getMapper(text1);
+
         JsonNode node1 = objectMapper.readTree(text1);
         JsonNode node2 = objectMapper.readTree(text2);
 
