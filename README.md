@@ -8,5 +8,8 @@
 ### Description
 It's a primitive application that compares two *flat* jsons and returns their difference.
 
-### Example
+### Example JSON
 [![demo](https://asciinema.org/a/qRHu7BNdJ8Z0LSUdN4V6jbBKP.svg)](https://asciinema.org/a/qRHu7BNdJ8Z0LSUdN4V6jbBKP)
+
+### Example YAML
+[![demo](https://asciinema.org/a/WsrZdioKXyXmNIoskoRMKGNFu.svg)](https://asciinema.org/a/WsrZdioKXyXmNIoskoRMKGNFu)
