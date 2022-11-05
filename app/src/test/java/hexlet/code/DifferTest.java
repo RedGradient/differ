@@ -20,16 +20,33 @@ public class DifferTest {
         var content1 = Parse.parse(filePath1);
         var content2 = Parse.parse(filePath2);
 
-        var result = Differ.differ(content1, content2);
+        var result = Differ.generate(content1, content2, "stylish");
 
         var expected = """
                 {
-                  - follow: false
-                    host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                  + timeout: 20
-                  + verbose: true
+                    chars1: [a, b, c]
+                  - chars2: [d, e, f]
+                  + chars2: false
+                  - checked: false
+                  + checked: true
+                  - default: null
+                  + default: [value1, value2]
+                  - id: 45
+                  + id: null
+                  - key1: value1
+                  + key2: value2
+                    numbers1: [1, 2, 3, 4]
+                  - numbers2: [2, 3, 4, 5]
+                  + numbers2: [22, 33, 44, 55]
+                  - numbers3: [3, 4, 5]
+                  + numbers4: [4, 5, 6]
+                  + obj1: {nestedKey=value, isNested=true}
+                  - setting1: Some value
+                  + setting1: Another value
+                  - setting2: 200
+                  + setting2: 300
+                  - setting3: true
+                  + setting3: none
                 }""";
 
         assertEquals(result, expected);
@@ -42,10 +59,18 @@ public class DifferTest {
 
         var expected = """
                 {
-                  "host": "hexlet.io",
-                  "timeout": 50,
-                  "proxy": "123.234.53.22",
-                  "follow": false
+                  "setting1": "Some value",
+                  "setting2": 200,
+                  "setting3": true,
+                  "key1": "value1",
+                  "numbers1": [1, 2, 3, 4],
+                  "numbers2": [2, 3, 4, 5],
+                  "id": 45,
+                  "default": null,
+                  "checked": false,
+                  "numbers3": [3, 4, 5],
+                  "chars1": ["a", "b", "c"],
+                  "chars2": ["d", "e", "f"]
                 }""";
 
         assertEquals(expected, content);
@@ -63,6 +88,17 @@ public class DifferTest {
         testDiffAbstract(jsonFilePath1, jsonFilePath2);
         testDiffAbstract(yamlFilePath1, yamlFilePath2);
 
-        assertEquals("", Differ.differ("", ""));
+        assertEquals("", Differ.generate("", "", "stylish"));
+    }
+
+    @Test
+    public void testStylishFormatter() {
+        var expected1 = "[1, 2, 3, 4]";
+        var actual1 = Differ.stylishFormatter("[1,2,3,4]");
+        assertEquals(expected1, actual1);
+
+        var expected2 = "{nestedKey=value, isNested=true}";
+        var actual2 = Differ.stylishFormatter("{nestedKey:value,isNested:true}");
+        assertEquals(expected2, actual2);
     }
 }
