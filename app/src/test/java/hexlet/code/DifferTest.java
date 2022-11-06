@@ -15,12 +15,10 @@ public class DifferTest {
         resourcesPath = (new File("src/test/resources")).getAbsolutePath();
     }
 
-    public void testDiffAbstract(String filePath1, String filePath2) throws Exception {
+    public void testDiffStylishAbstract(String filePath1, String filePath2) throws Exception {
 
         var content1 = Parse.parse(filePath1);
         var content2 = Parse.parse(filePath2);
-
-        var result = Differ.generate(content1, content2, "stylish");
 
         var expected = """
                 {
@@ -49,7 +47,34 @@ public class DifferTest {
                   + setting3: none
                 }""";
 
-        assertEquals(result, expected);
+        var actual = Differ.generate(content1, content2, "stylish");
+
+        assertEquals(expected, actual);
+    }
+
+    public void testDiffPlainAbstract(String filePath1, String filePath2) throws Exception {
+        var content1 = Parse.parse(filePath1);
+        var content2 = Parse.parse(filePath2);
+
+        var expected = """
+                Property 'chars2' was updated. From [complex value] to false
+                Property 'checked' was updated. From false to true
+                Property 'default' was updated. From null to [complex value]
+                Property 'id' was updated. From 45 to null
+                Property 'key1' was removed
+                Property 'key2' was added with value: 'value2'
+                Property 'numbers2' was updated. From [complex value] to [complex value]
+                Property 'numbers3' was removed
+                Property 'numbers4' was added with value: [complex value]
+                Property 'obj1' was added with value: [complex value]
+                Property 'setting1' was updated. From 'Some value' to 'Another value'
+                Property 'setting2' was updated. From 200 to 300
+                Property 'setting3' was updated. From true to 'none'
+                """;
+
+        var actual = Differ.generate(content1, content2, "plain");
+
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -77,7 +102,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testDiffJson() throws Exception {
+    public void testDiff() throws Exception {
 
         var jsonFilePath1 = resourcesPath + "/json/file1.json";
         var jsonFilePath2 = resourcesPath + "/json/file2.json";
@@ -85,20 +110,12 @@ public class DifferTest {
         var yamlFilePath1 = resourcesPath + "/yml/file1.yml";
         var yamlFilePath2 = resourcesPath + "/yml/file2.yml";
 
-        testDiffAbstract(jsonFilePath1, jsonFilePath2);
-        testDiffAbstract(yamlFilePath1, yamlFilePath2);
+        testDiffStylishAbstract(jsonFilePath1, jsonFilePath2);
+        testDiffStylishAbstract(yamlFilePath1, yamlFilePath2);
+
+        testDiffPlainAbstract(jsonFilePath1, jsonFilePath2);
+        testDiffPlainAbstract(yamlFilePath1, yamlFilePath2);
 
         assertEquals("", Differ.generate("", "", "stylish"));
-    }
-
-    @Test
-    public void testStylishFormatter() {
-        var expected1 = "[1, 2, 3, 4]";
-        var actual1 = Differ.stylishFormatter("[1,2,3,4]");
-        assertEquals(expected1, actual1);
-
-        var expected2 = "{nestedKey=value, isNested=true}";
-        var actual2 = Differ.stylishFormatter("{nestedKey:value,isNested:true}");
-        assertEquals(expected2, actual2);
     }
 }
