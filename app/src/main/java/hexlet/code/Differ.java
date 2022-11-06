@@ -1,14 +1,9 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,98 +13,14 @@ import java.util.TreeSet;
 
 public class Differ {
 
-    private static final int SIGN = 0;
-    private static final int VALUE = 1;
-
-    public static String toPrettyString(String text) {
-        if (text.startsWith("[") || text.startsWith("{")) {
-            return text.replace(",", ", ").replace(":", "=");
-        }
-        return text;
-    }
-
-    public static String format(String json) {
-        if ((json.startsWith("[") && json.endsWith("]")) ||
-                (json.startsWith("{") && json.endsWith("}"))) {
-            return "[complex value]";
-        }
-
-        if (json.equals("true") ||
-                json.equals("false") ||
-                json.equals("null")) {
-            return json;
-        }
-
-        try {
-            Integer.parseInt(json);
-            return json;
-        } catch (Exception e) {
-            return "'" + json + "'";
-        }
-    }
-
-    public static String plainFormatter(TreeMap<String, LinkedList<String[]>> diff) {
-
-        StringBuilder builder = new StringBuilder();
-
-        for (var field : diff.keySet()) {
-            String line = "";
-            var changes = diff.get(field);
-
-            if (changes.size() == 1) {
-                var sign = changes.get(0)[SIGN];
-                var value = format(changes.get(0)[VALUE]);
-
-                if (sign.equals("+")) {
-                    line = String.format("Property '%s' was added with value: %s\n", field, value);
-                } else if (sign.equals("-")) {
-                    line = String.format("Property '%s' was removed\n", field);
-                }
-            } else if (changes.size() == 2) {
-                var oldValue = format(changes.get(0)[VALUE]);
-                var newValue = format(changes.get(1)[VALUE]);
-
-                line = String.format("Property '%s' was updated. From %s to %s\n", field, oldValue, newValue);
-            }
-            builder.append(line);
-        }
-        return builder.toString().replace("\"", "");
-    }
-
-    public static String stylishFormatter(TreeMap<String, LinkedList<String[]>> diff) {
-        StringBuilder builder = new StringBuilder("{\n");
-        for (var field : diff.keySet()) {
-            var changes = diff.get(field);
-            for (var change : changes) {
-                var sign = change[SIGN];
-                var value = toPrettyString(change[VALUE]);
-                var line = String.format("  %s %s: %s\n", sign, field, value);
-                builder.append(line);
-            }
-        }
-        builder.append("}");
-        return builder.toString().replace("\"", "");
-    }
-
-    public static String generate(String text1, String text2, String formatter) throws Exception {
+    public static String generate(String text1, String text2, String formatName) throws Exception {
 
         if (text1.isEmpty() && text2.isEmpty()) {
             return "";
         }
-        var diff = differ(text1, text2);
 
-        switch (formatter) {
-            case "stylish" -> {
-                return stylishFormatter(diff);
-            }
-            case "plain" -> {
-                return plainFormatter(diff);
-            }
-            default -> {
-                var message = String.format("Unknown format name: %s. Can be 'stylish' or 'plain'", formatter);
-                throw new Exception(message);
-            }
-        }
+        var diff = differ(text1, text2);
+        return Formatter.formatter(diff, formatName);
     }
 
     private static TreeMap<String, LinkedList<String[]>> differ(String text1, String text2)
