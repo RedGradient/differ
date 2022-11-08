@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.formatters.JsonFormatter;
 import hexlet.code.formatters.PlainFormatter;
 import hexlet.code.formatters.StylishFormatter;
 
@@ -14,6 +15,9 @@ public class Formatter {
             }
             case "plain" -> {
                 return PlainFormatter.plainFormatter(diff);
+            }
+            case "json" -> {
+                return JsonFormatter.jsonFormatter(diff);
             }
             default -> {
                 var message = String.format("Unknown format name: %s. Can be 'stylish' or 'plain'", formatName);

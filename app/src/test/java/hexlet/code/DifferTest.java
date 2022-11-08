@@ -77,6 +77,34 @@ public class DifferTest {
         assertEquals(expected, actual);
     }
 
+    public void testDiffJsonAbstract(String filePath1, String filePath2) throws Exception {
+        var content1 = Parse.parse(filePath1);
+        var content2 = Parse.parse(filePath2);
+
+        var expected = """
+                {
+                  "chars1" : [ [ " ", "[\\"a\\",\\"b\\",\\"c\\"]" ] ],
+                  "chars2" : [ [ "-", "[\\"d\\",\\"e\\",\\"f\\"]" ], [ "+", "false" ] ],
+                  "checked" : [ [ "-", "false" ], [ "+", "true" ] ],
+                  "default" : [ [ "-", "null" ], [ "+", "[\\"value1\\",\\"value2\\"]" ] ],
+                  "id" : [ [ "-", "45" ], [ "+", "null" ] ],
+                  "key1" : [ [ "-", "\\"value1\\"" ] ],
+                  "key2" : [ [ "+", "\\"value2\\"" ] ],
+                  "numbers1" : [ [ " ", "[1,2,3,4]" ] ],
+                  "numbers2" : [ [ "-", "[2,3,4,5]" ], [ "+", "[22,33,44,55]" ] ],
+                  "numbers3" : [ [ "-", "[3,4,5]" ] ],
+                  "numbers4" : [ [ "+", "[4,5,6]" ] ],
+                  "obj1" : [ [ "+", "{\\"nestedKey\\":\\"value\\",\\"isNested\\":true}" ] ],
+                  "setting1" : [ [ "-", "\\"Some value\\"" ], [ "+", "\\"Another value\\"" ] ],
+                  "setting2" : [ [ "-", "200" ], [ "+", "300" ] ],
+                  "setting3" : [ [ "-", "true" ], [ "+", "\\"none\\"" ] ]
+                }""";
+
+        var actual = Differ.generate(content1, content2, "json");
+
+        assertEquals(expected, actual);
+    }
+
     @Test
     public void testParse() throws Exception {
         var filePath = resourcesPath + "/json/file1.json";
@@ -115,6 +143,9 @@ public class DifferTest {
 
         testDiffPlainAbstract(jsonFilePath1, jsonFilePath2);
         testDiffPlainAbstract(yamlFilePath1, yamlFilePath2);
+
+        testDiffJsonAbstract(jsonFilePath1, jsonFilePath2);
+        testDiffJsonAbstract(yamlFilePath1, yamlFilePath2);
 
         assertEquals("", Differ.generate("", "", "stylish"));
     }
