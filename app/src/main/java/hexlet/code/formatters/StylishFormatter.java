@@ -1,28 +1,38 @@
 package hexlet.code.formatters;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class StylishFormatter {
-    public static String stylishFormatter(TreeMap<String, LinkedList<String[]>> diff) {
+    public static String stylishFormatter(TreeMap<String, HashMap<String, String>> diff) {
         StringBuilder builder = new StringBuilder("{\n");
         for (var field : diff.keySet()) {
             var changes = diff.get(field);
-            for (var change : changes) {
-                var sign = change[Utils.SIGN];
-                var value = toPrettyString(change[Utils.VALUE]);
-                var line = String.format("  %s %s: %s\n", sign, field, value);
-                builder.append(line);
+
+            if (changes.containsKey("=")) {
+                var value = toPrettyString(changes.get("="));
+                builder.append(String.format("    %s: %s\n", field, value));
+                continue;
+            }
+            if (changes.containsKey("-")) {
+                var value = toPrettyString(changes.get("-"));
+                builder.append(String.format("  - %s: %s\n", field, value));
+            }
+            if (changes.containsKey("+")) {
+                var value = toPrettyString(changes.get("+"));
+                builder.append(String.format("  + %s: %s\n", field, value));
             }
         }
         builder.append("}");
-        return builder.toString().replace("\"", "");
+
+        return builder.toString();
     }
 
-    public static String toPrettyString(String text) {
-        if (text.startsWith("[") || text.startsWith("{")) {
-            return text.replace(",", ", ").replace(":", "=");
+    private static String toPrettyString(String text) {
+        var prettyText = text.replace("\"", "");
+        if (prettyText.startsWith("[") || prettyText.startsWith("{")) {
+            prettyText = prettyText.replace(",", ", ").replace(":", "=");
         }
-        return text;
+        return prettyText;
     }
 }

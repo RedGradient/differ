@@ -4,11 +4,11 @@ import hexlet.code.formatters.JsonFormatter;
 import hexlet.code.formatters.PlainFormatter;
 import hexlet.code.formatters.StylishFormatter;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Formatter {
-    public static String formatter(TreeMap<String, LinkedList<String[]>> diff, String formatName) throws Exception {
+    public static String formatter(TreeMap<String, HashMap<String, String>> diff, String formatName) throws Exception {
         switch (formatName) {
             case "stylish" -> {
                 return StylishFormatter.stylishFormatter(diff);
@@ -20,7 +20,8 @@ public class Formatter {
                 return JsonFormatter.jsonFormatter(diff);
             }
             default -> {
-                var message = String.format("Unknown format name: %s. Can be 'stylish' or 'plain'", formatName);
+                var message = String.format("Unknown format name: %s. Can be 'stylish', 'plain' or 'json'",
+                        formatName);
                 throw new Exception(message);
             }
         }

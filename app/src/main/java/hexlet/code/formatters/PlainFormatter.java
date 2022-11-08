@@ -1,54 +1,56 @@
 package hexlet.code.formatters;
 
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 
 public class PlainFormatter {
-    public static String plainFormatter(TreeMap<String, LinkedList<String[]>> diff) {
+    public static String plainFormatter(TreeMap<String, HashMap<String, String>> diff) {
 
         StringBuilder builder = new StringBuilder();
 
         for (var field : diff.keySet()) {
-            String line = "";
+
             var changes = diff.get(field);
 
-            if (changes.size() == 1) {
-                var sign = changes.get(0)[Utils.SIGN];
-                var value = format(changes.get(0)[Utils.VALUE]);
-
-                if (sign.equals("+")) {
-                    line = String.format("Property '%s' was added with value: %s\n", field, value);
-                } else if (sign.equals("-")) {
-                    line = String.format("Property '%s' was removed\n", field);
-                }
-            } else if (changes.size() == 2) {
-                var oldValue = format(changes.get(0)[Utils.VALUE]);
-                var newValue = format(changes.get(1)[Utils.VALUE]);
-
-                line = String.format("Property '%s' was updated. From %s to %s\n", field, oldValue, newValue);
+            if (changes.containsKey("-") && changes.containsKey("+")) {
+                var oldValue = toPrettyString(changes.get("-"));
+                var newValue = toPrettyString(changes.get("+"));
+                var changeLog = String.format("Property '%s' was updated. From %s to %s\n",
+                        field, oldValue, newValue);
+                builder.append(changeLog);
+                continue;
             }
-            builder.append(line);
+
+            if (changes.containsKey("-")) {
+                builder.append(String.format("Property '%s' was removed\n", field));
+            } else if (changes.containsKey("+")) {
+                var value = toPrettyString(changes.get("+"));
+                builder.append(String.format("Property '%s' was added with value: %s\n", field, value));
+            }
+
         }
+
         return builder.toString().replace("\"", "");
     }
 
-    public static String format(String json) {
+    private static String toPrettyString(String json) {
         if ((json.startsWith("[") && json.endsWith("]"))
                 || (json.startsWith("{") && json.endsWith("}"))) {
             return "[complex value]";
         }
 
-        if (json.equals("true")
-                || json.equals("false")
-                || json.equals("null")) {
+//        if (json.equals("true") || json.equals("false") || json.equals("null")) {
+        if (List.of("true", "false", "null").contains(json)) {
             return json;
         }
 
         try {
-            Integer.parseInt(json);
-            return json;
-        } catch (Exception e) {
+            Double.parseDouble(json);
+        } catch (NumberFormatException nfe) {
             return "'" + json + "'";
         }
+
+        return json;
     }
 }
