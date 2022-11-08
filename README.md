@@ -8,8 +8,14 @@
 ### Description
 It's a primitive application that compares two *flat* jsons and returns their difference.
 
-### Example JSON
-[![demo](https://asciinema.org/a/qRHu7BNdJ8Z0LSUdN4V6jbBKP.svg)](https://asciinema.org/a/qRHu7BNdJ8Z0LSUdN4V6jbBKP)
+### Example: get differ between JSON files
+[![demo](https://asciinema.org/a/PCJyADVCdkDp7hemmVtn3eNLJ.svg)](https://asciinema.org/a/PCJyADVCdkDp7hemmVtn3eNLJ)
 
-### Example YAML
-[![demo](https://asciinema.org/a/WsrZdioKXyXmNIoskoRMKGNFu.svg)](https://asciinema.org/a/WsrZdioKXyXmNIoskoRMKGNFu)
+### Example: get differ between YAML files
+[![demo](https://asciinema.org/a/IwgjmKKhVmBpUTRwLng4WZRs2.svg)](https://asciinema.org/a/IwgjmKKhVmBpUTRwLng4WZRs2)
+
+### Plain output format
+[![demo](https://asciinema.org/a/W068sGCYaG4c0ZqzNEm7njA6j.svg)](https://asciinema.org/a/W068sGCYaG4c0ZqzNEm7njA6j)
+
+### JSON output format
+[![demo](https://asciinema.org/a/EMYUVkQ48EBR7ZD8KqgkgJ15L.svg)](https://asciinema.org/a/EMYUVkQ48EBR7ZD8KqgkgJ15L)
