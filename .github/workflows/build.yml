@@ -23,11 +23,11 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK.TOKEN }}
-      - uses: paambaati/codeclimate-action@v2.2.4
+      - uses: paambaati/codeclimate-action@v3.2.0
         env:
           CC_TEST_REPORTER_ID: f34ceae388c1da2f1daa4bff4053e2940de18054817c0a36cddba568b4250b8a
         with:
-          coverageCommand: ./gradlew jacocoTestReport
+          coverageCommand: gradlew jacocoTestReport
 #  coverage:
 #    runs-on: ubuntu-latest
 #    steps:
