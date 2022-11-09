@@ -7,7 +7,7 @@
 # Differ (Education project)
 
 ### Description
-It's a primitive application that compares two *flat* jsons and returns their difference.
+Differ is an application that compares two *flat* json/yaml files and returns their difference.
 
 ### Example: get differ between JSON files
 [![demo](https://asciinema.org/a/PCJyADVCdkDp7hemmVtn3eNLJ.svg)](https://asciinema.org/a/PCJyADVCdkDp7hemmVtn3eNLJ)
