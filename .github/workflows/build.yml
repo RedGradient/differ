@@ -27,7 +27,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: f34ceae388c1da2f1daa4bff4053e2940de18054817c0a36cddba568b4250b8a
         with:
-          coverageCommand: gradlew jacocoTestReport
+          coverageCommand: ./app/gradlew jacocoTestReport
 #  coverage:
 #    runs-on: ubuntu-latest
 #    steps:
