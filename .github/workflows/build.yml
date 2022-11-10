@@ -17,12 +17,6 @@ jobs:
         with:
           arguments: build
           build-root-directory: app
-      - run: make
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK.TOKEN }}
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v2.7.1
         env:
@@ -31,3 +25,9 @@ jobs:
         with:
           coverageCommand: make coverage
           coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+      - run: make build
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK.TOKEN }}
