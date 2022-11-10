@@ -27,6 +27,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 compileJava {
@@ -42,6 +43,7 @@ testlogger {
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = true
     }
