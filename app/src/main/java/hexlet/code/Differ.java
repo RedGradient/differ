@@ -31,17 +31,6 @@ public class Differ {
         return objectMapper.readTree(file);
     }
 
-    public static String generate(String filePath1, String filePath2) throws Exception {
-
-        var formatName = "stylish";
-
-        var node1 = getRootNone(filePath1);
-        var node2 = getRootNone(filePath2);
-
-        var diff = Tree.build(node1, node2);
-        return Formatter.render(diff, formatName);
-    }
-
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
         var node1 = getRootNone(filePath1);
