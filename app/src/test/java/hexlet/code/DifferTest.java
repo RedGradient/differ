@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
-    public static String resourcesPath;
+    private static String resourcesPath;
 
     @BeforeAll
     public static void beforeAll() {
