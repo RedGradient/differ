@@ -16,19 +16,19 @@ public class Plain {
             if (changes.containsKey("-") && changes.containsKey("+")) {
                 var oldValue = toPrettyString(changes.get("-"));
                 var newValue = toPrettyString(changes.get("+"));
-                var changeLog = String.format("Property '%s' was updated. From %s to %s\n",
+                var changeLog = String.format("Property '%s' was updated. From %s to %s",
                         field, oldValue, newValue);
                 builder.append(changeLog);
-                continue;
-            }
-
-            if (changes.containsKey("-")) {
-                builder.append(String.format("Property '%s' was removed\n", field));
+            } else if (changes.containsKey("-")) {
+                builder.append(String.format("Property '%s' was removed", field));
             } else if (changes.containsKey("+")) {
                 var value = toPrettyString(changes.get("+"));
-                builder.append(String.format("Property '%s' was added with value: %s\n", field, value));
+                builder.append(String.format("Property '%s' was added with value: %s", field, value));
             }
 
+            if (!field.equals(diff.lastKey())) {
+                builder.append("\n");
+            }
         }
 
         return builder.toString().replace("\"", "");
