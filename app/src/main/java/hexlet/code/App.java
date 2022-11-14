@@ -14,10 +14,10 @@ public class App implements Callable<Integer> {
     @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: ${DEFAULT-VALUE}]")
     private String format;
 
-    @Parameters(index = "0", description = "descr1")
+    @Parameters(index = "0", description = "path to first file")
     private String filePath1;
 
-    @Parameters(index = "1", description = "descr2")
+    @Parameters(index = "1", description = "path to second file")
     private String filePath2;
 
     @Override
