@@ -31,6 +31,7 @@ public class Plain {
 
         }
 
+        builder.append("\n");
         return builder.toString().replace("\"", "");
     }
 
@@ -40,7 +41,6 @@ public class Plain {
             return "[complex value]";
         }
 
-//        if (json.equals("true") || json.equals("false") || json.equals("null")) {
         if (List.of("true", "false", "null").contains(json)) {
             return json;
         }
