@@ -24,6 +24,8 @@ public class Plain {
             } else if (changes.containsKey("+")) {
                 var value = toPrettyString(changes.get("+"));
                 builder.append(String.format("Property '%s' was added with value: %s", field, value));
+            } else {
+                continue;
             }
 
             if (!field.equals(diff.lastKey())) {
