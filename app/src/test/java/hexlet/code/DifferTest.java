@@ -31,7 +31,7 @@ public class DifferTest {
         });
     }
 
-    public void testDiffStylishAbstract(String filePath1, String filePath2) throws Exception {
+    private void testDiffStylishAbstract(String filePath1, String filePath2) throws Exception {
 
         var expected = """
                 {
@@ -65,7 +65,7 @@ public class DifferTest {
         assertEquals(expected, actual);
     }
 
-    public void testDiffPlainAbstract(String filePath1, String filePath2) throws Exception {
+    private void testDiffPlainAbstract(String filePath1, String filePath2) throws Exception {
 
         var expected = """
                 Property 'chars2' was updated. From [complex value] to false
@@ -87,7 +87,7 @@ public class DifferTest {
         assertEquals(expected, actual);
     }
 
-    public void testDiffJsonAbstract(String filePath1, String filePath2) throws Exception {
+    private void testDiffJsonAbstract(String filePath1, String filePath2) throws Exception {
 
         Path expectedPath = Paths.get(resourcesPath + "/jsonExpected.json");
         var expected = Files.readString(expectedPath);
