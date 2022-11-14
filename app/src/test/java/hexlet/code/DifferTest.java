@@ -87,7 +87,7 @@ public class DifferTest {
 
     public void testDiffJsonAbstract(String filePath1, String filePath2) throws Exception {
 
-        var expected = Parse.parse(resourcesPath + "/jsonExpected.json");
+        var expected = Parser.parse(resourcesPath + "/jsonExpected.json");
 
         var actual = Differ.generate(filePath1, filePath2, "json");
 
@@ -97,7 +97,7 @@ public class DifferTest {
     @Test
     public void testParse() throws Exception {
         var filePath = resourcesPath + "/json/file1.json";
-        var content = Parse.parse(filePath);
+        var content = Parser.parse(filePath);
 
         var expected = """
                 {

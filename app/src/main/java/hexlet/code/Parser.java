@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Parse {
+public class Parser {
 
     public static String parse(String readFilePath) throws Exception {
 
