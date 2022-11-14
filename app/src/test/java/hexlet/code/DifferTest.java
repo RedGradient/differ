@@ -81,7 +81,6 @@ public class DifferTest {
                 Property 'setting1' was updated. From 'Some value' to 'Another value'
                 Property 'setting2' was updated. From 200 to 300
                 Property 'setting3' was updated. From true to 'none'
-                
                 """;
 
         var actual = Differ.generate(filePath1, filePath2, "plain");

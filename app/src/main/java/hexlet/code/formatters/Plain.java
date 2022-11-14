@@ -31,7 +31,6 @@ public class Plain {
 
         }
 
-        builder.append("\n");
         return builder.toString().replace("\"", "");
     }
 
