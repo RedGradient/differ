@@ -21,16 +21,14 @@ public class App implements Callable<Integer> {
     private String filePath2;
 
     @Override
-    public Integer call() throws Exception {
-
-//        var text1 = Parse.parse(filePath1);
-//        var text2 = Parse.parse(filePath2);
-
-        var diff = Differ.generate(filePath1, filePath2, format);
-
-        System.out.println(diff);
-
-        return 0;
+    public Integer call() {
+        try {
+            var diff = Differ.generate(filePath1, filePath2, format);
+            System.out.println(diff);
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
     public static void main(String... args) {
