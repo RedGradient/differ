@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public class JsonFormatter {
+public class Json {
 //    public static String jsonFormatter(TreeMap<String, HashMap<String, String>> diff) {
 //
 //        StringBuilder builder = new StringBuilder();

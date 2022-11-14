@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public class StylishFormatter {
+public class Stylish {
     public static String stylishFormatter(TreeMap<String, HashMap<String, String>> diff) {
         StringBuilder builder = new StringBuilder("{\n");
         for (var field : diff.keySet()) {

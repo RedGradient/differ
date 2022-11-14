@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
-public class PlainFormatter {
+public class Plain {
     public static String plainFormatter(TreeMap<String, HashMap<String, String>> diff) {
 
         StringBuilder builder = new StringBuilder();
