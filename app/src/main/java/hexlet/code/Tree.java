@@ -1,26 +1,17 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class DiffTree {
+public class Tree {
 
-    public static TreeMap<String, HashMap<String, String>> build(String text1, String text2)
-            throws JsonProcessingException {
-
-        ObjectMapper objectMapper = getMapper(text1);
+    public static TreeMap<String, HashMap<String, String>> build(JsonNode node1, JsonNode node2) {
 
         TreeSet<String> fields = new TreeSet<>();
-
-        JsonNode node1 = objectMapper.readTree(text1);
-        JsonNode node2 = objectMapper.readTree(text2);
 
         Iterator<String> it1 = node1.fieldNames();
         while (it1.hasNext()) {
@@ -55,22 +46,4 @@ public class DiffTree {
 
         return result;
     }
-
-    private static ObjectMapper getMapper(String text) {
-       ObjectMapper objectMapper;
-
-       try {
-           objectMapper = new ObjectMapper();
-           objectMapper.readTree(text);
-       } catch (Exception e1) {
-           objectMapper = new YAMLMapper();
-           try {
-               objectMapper.readTree(text);
-           } catch (Exception e2) {
-               objectMapper = null;
-           }
-       }
-
-       return objectMapper;
-   }
 }

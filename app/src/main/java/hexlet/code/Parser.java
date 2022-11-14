@@ -1,19 +1,26 @@
 package hexlet.code;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class Parser {
 
-    public static String parse(String readFilePath) throws Exception {
+    public static Map parse(String content, String extension) throws Exception {
 
-        Path path = Paths.get(readFilePath);
-        if (!Files.exists(path)) {
-            var message = String.format("File %s does not exist", path);
-            throw new Exception(message);
+        ObjectMapper objectMapper;
+        switch (Objects.requireNonNull(extension)) {
+            case "json" -> {
+                objectMapper = new ObjectMapper();
+            }
+            case "yml", "yaml" -> {
+                objectMapper = new YAMLMapper();
+            }
+            default -> throw new Exception("Unknown extension");
         }
 
-        return Files.readString(path);
+        return objectMapper.readValue(content, Map.class);
     }
 }

@@ -14,7 +14,8 @@ public class App implements Callable<Integer> {
     private final int SUCCESS_EXIT_CODE = 0;
     private final int ERROR_EXIT_CODE = 1;
 
-    @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: ${DEFAULT-VALUE}]")
+    @Option(names = {"-f", "--format"}, defaultValue = "stylish",
+            description = "output format [default: ${DEFAULT-VALUE}]")
     private String format;
 
     @Parameters(index = "0", description = "path to first file")

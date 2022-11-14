@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -87,36 +90,37 @@ public class DifferTest {
 
     public void testDiffJsonAbstract(String filePath1, String filePath2) throws Exception {
 
-        var expected = Parser.parse(resourcesPath + "/jsonExpected.json");
+        Path expectedPath = Paths.get(resourcesPath + "/jsonExpected.json");
+        var expected = Files.readString(expectedPath);
 
         var actual = Differ.generate(filePath1, filePath2, "json");
 
         assertEquals(expected, actual);
     }
 
-    @Test
-    public void testParse() throws Exception {
-        var filePath = resourcesPath + "/json/file1.json";
-        var content = Parser.parse(filePath);
-
-        var expected = """
-                {
-                  "setting1": "Some value",
-                  "setting2": 200,
-                  "setting3": true,
-                  "key1": "value1",
-                  "numbers1": [1, 2, 3, 4],
-                  "numbers2": [2, 3, 4, 5],
-                  "id": 45,
-                  "default": null,
-                  "checked": false,
-                  "numbers3": [3, 4, 5],
-                  "chars1": ["a", "b", "c"],
-                  "chars2": ["d", "e", "f"]
-                }""";
-
-        assertEquals(expected, content);
-    }
+//    @Test
+//    public void testParse() throws Exception {
+//        var filePath = resourcesPath + "/json/file1.json";
+//        var content = Parser.parse(filePath);
+//
+//        var expected = """
+//                {
+//                  "setting1": "Some value",
+//                  "setting2": 200,
+//                  "setting3": true,
+//                  "key1": "value1",
+//                  "numbers1": [1, 2, 3, 4],
+//                  "numbers2": [2, 3, 4, 5],
+//                  "id": 45,
+//                  "default": null,
+//                  "checked": false,
+//                  "numbers3": [3, 4, 5],
+//                  "chars1": ["a", "b", "c"],
+//                  "chars2": ["d", "e", "f"]
+//                }""";
+//
+//        assertEquals(expected, content);
+//    }
 
     @Test
     public void testDiff() throws Exception {
@@ -135,8 +139,5 @@ public class DifferTest {
 
         testDiffJsonAbstract(jsonFilePath1, jsonFilePath2);
         testDiffJsonAbstract(yamlFilePath1, yamlFilePath2);
-
-        var emptyFilePath = resourcesPath + "/empty.json";
-        assertEquals("", Differ.generate(emptyFilePath, emptyFilePath, "stylish"));
     }
 }

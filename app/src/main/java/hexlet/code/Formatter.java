@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Formatter {
-    public static String formatter(TreeMap<String, HashMap<String, String>> diff, String formatName) throws Exception {
+    public static String render(TreeMap<String, HashMap<String, String>> diff, String formatName) throws Exception {
         switch (formatName) {
             case "stylish" -> {
                 return Stylish.stylishFormatter(diff);
