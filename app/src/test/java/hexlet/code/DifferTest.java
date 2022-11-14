@@ -30,9 +30,6 @@ public class DifferTest {
 
     public void testDiffStylishAbstract(String filePath1, String filePath2) throws Exception {
 
-//        var content1 = Parse.parse(filePath1);
-//        var content2 = Parse.parse(filePath2);
-
         var expected = """
                 {
                     chars1: [a, b, c]
@@ -66,8 +63,6 @@ public class DifferTest {
     }
 
     public void testDiffPlainAbstract(String filePath1, String filePath2) throws Exception {
-//        var content1 = Parse.parse(filePath1);
-//        var content2 = Parse.parse(filePath2);
 
         var expected = """
                 Property 'chars2' was updated. From [complex value] to false
@@ -91,8 +86,6 @@ public class DifferTest {
     }
 
     public void testDiffJsonAbstract(String filePath1, String filePath2) throws Exception {
-        var content1 = Parse.parse(filePath1);
-        var content2 = Parse.parse(filePath2);
 
         var expected = Parse.parse(resourcesPath + "/jsonExpected.json");
 
