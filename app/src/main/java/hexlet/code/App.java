@@ -23,10 +23,10 @@ public class App implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
 
-        var text1 = Parse.parse(filePath1);
-        var text2 = Parse.parse(filePath2);
+//        var text1 = Parse.parse(filePath1);
+//        var text2 = Parse.parse(filePath2);
 
-        var diff = Differ.generate(text1, text2, format);
+        var diff = Differ.generate(filePath1, filePath2, format);
 
         System.out.println(diff);
 

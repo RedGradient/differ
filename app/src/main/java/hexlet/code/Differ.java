@@ -12,7 +12,10 @@ import java.util.TreeSet;
 
 public class Differ {
 
-    public static String generate(String text1, String text2, String formatName) throws Exception {
+    public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
+
+        var text1 = Parse.parse(filePath1);
+        var text2 = Parse.parse(filePath2);
 
         if (text1.isEmpty() && text2.isEmpty()) {
             return "";

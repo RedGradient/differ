@@ -30,8 +30,8 @@ public class DifferTest {
 
     public void testDiffStylishAbstract(String filePath1, String filePath2) throws Exception {
 
-        var content1 = Parse.parse(filePath1);
-        var content2 = Parse.parse(filePath2);
+//        var content1 = Parse.parse(filePath1);
+//        var content2 = Parse.parse(filePath2);
 
         var expected = """
                 {
@@ -60,14 +60,14 @@ public class DifferTest {
                   + setting3: none
                 }""";
 
-        var actual = Differ.generate(content1, content2, "stylish");
+        var actual = Differ.generate(filePath1, filePath2, "stylish");
 
         assertEquals(expected, actual);
     }
 
     public void testDiffPlainAbstract(String filePath1, String filePath2) throws Exception {
-        var content1 = Parse.parse(filePath1);
-        var content2 = Parse.parse(filePath2);
+//        var content1 = Parse.parse(filePath1);
+//        var content2 = Parse.parse(filePath2);
 
         var expected = """
                 Property 'chars2' was updated. From [complex value] to false
@@ -85,7 +85,7 @@ public class DifferTest {
                 Property 'setting3' was updated. From true to 'none'
                 """;
 
-        var actual = Differ.generate(content1, content2, "plain");
+        var actual = Differ.generate(filePath1, filePath2, "plain");
 
         assertEquals(expected, actual);
     }
@@ -96,7 +96,7 @@ public class DifferTest {
 
         var expected = Parse.parse(resourcesPath + "/jsonExpected.json");
 
-        var actual = Differ.generate(content1, content2, "json");
+        var actual = Differ.generate(filePath1, filePath2, "json");
 
         assertEquals(expected, actual);
     }
@@ -143,6 +143,7 @@ public class DifferTest {
         testDiffJsonAbstract(jsonFilePath1, jsonFilePath2);
         testDiffJsonAbstract(yamlFilePath1, yamlFilePath2);
 
-        assertEquals("", Differ.generate("", "", "stylish"));
+        var emptyFilePath = resourcesPath + "/empty.json";
+        assertEquals("", Differ.generate(emptyFilePath, emptyFilePath, "stylish"));
     }
 }
