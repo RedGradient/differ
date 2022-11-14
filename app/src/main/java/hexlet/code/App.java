@@ -11,6 +11,9 @@ import java.util.concurrent.Callable;
         description = "Compares two configuration files and shows a difference.")
 public class App implements Callable<Integer> {
 
+    private final int SUCCESS_EXIT_CODE = 0;
+    private final int ERROR_EXIT_CODE = 1;
+
     @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: ${DEFAULT-VALUE}]")
     private String format;
 
@@ -25,14 +28,14 @@ public class App implements Callable<Integer> {
         try {
             var diff = Differ.generate(filePath1, filePath2, format);
             System.out.println(diff);
-            return 0;
+            return SUCCESS_EXIT_CODE;
         } catch (Exception e) {
-            return 1;
+            return ERROR_EXIT_CODE;
         }
     }
 
     public static void main(String... args) {
-        new CommandLine(new App()).execute(args);
-//        System.exit(exitCode);
+        var exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
     }
 }
