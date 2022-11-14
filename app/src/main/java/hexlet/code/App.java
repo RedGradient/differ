@@ -11,8 +11,8 @@ import java.util.concurrent.Callable;
         description = "Compares two configuration files and shows a difference.")
 public class App implements Callable<Integer> {
 
-    @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
-    private String format = "stylish";
+    @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: ${DEFAULT-VALUE}]")
+    private String format;
 
     @Parameters(index = "0", description = "descr1")
     private String filePath1;

@@ -2,9 +2,11 @@ package hexlet.code;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
 
 import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
@@ -13,6 +15,17 @@ public class DifferTest {
     @BeforeAll
     public static void beforeAll() {
         resourcesPath = (new File("src/test/resources")).getAbsolutePath();
+    }
+
+    @Test
+    public void testDefaultValue() {
+
+        var jsonFilePath1 = resourcesPath + "/json/file1.json";
+        var jsonFilePath2 = resourcesPath + "/json/file2.json";
+
+        assertDoesNotThrow(() -> {
+            new CommandLine(new App()).execute(jsonFilePath1, jsonFilePath2);
+        });
     }
 
     public void testDiffStylishAbstract(String filePath1, String filePath2) throws Exception {
