@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Json {
-    public static String jsonFormatter(TreeMap<String, HashMap<String, String>> diff) throws JsonProcessingException {
+    public static String render(TreeMap<String, HashMap<String, String>> diff) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(diff);
     }

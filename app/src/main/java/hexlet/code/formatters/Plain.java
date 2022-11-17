@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class Plain {
-    public static String plainFormatter(TreeMap<String, HashMap<String, String>> diff) {
+    public static String render(TreeMap<String, HashMap<String, String>> diff) {
 
         StringBuilder builder = new StringBuilder();
 

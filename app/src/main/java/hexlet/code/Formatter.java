@@ -11,13 +11,13 @@ public class Formatter {
     public static String render(TreeMap<String, HashMap<String, String>> diff, String formatName) throws Exception {
         switch (formatName) {
             case "stylish" -> {
-                return Stylish.stylishFormatter(diff);
+                return Stylish.render(diff);
             }
             case "plain" -> {
-                return Plain.plainFormatter(diff);
+                return Plain.render(diff);
             }
             case "json" -> {
-                return Json.jsonFormatter(diff);
+                return Json.render(diff);
             }
             default -> {
                 var message = String.format("Unknown format name: %s. Can be 'stylish', 'plain' or 'json'",
