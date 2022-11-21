@@ -1,10 +1,11 @@
 package hexlet.code.formatters;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Stylish {
-    public static String render(TreeMap<String, HashMap<String, String>> diff) {
+    public static String render(Map<String, Map<String, String>> diff) {
         StringBuilder builder = new StringBuilder("{\n");
         for (var field : diff.keySet()) {
             var changes = diff.get(field);
@@ -23,6 +24,7 @@ public class Stylish {
                 builder.append(String.format("  + %s: %s\n", field, value));
             }
         }
+
         builder.append("}");
 
         return builder.toString();

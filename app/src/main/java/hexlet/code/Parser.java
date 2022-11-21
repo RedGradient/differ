@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class Parser {
 
-    public static Map parse(String content, String extension) throws Exception {
+    public static Map parse(String content, String format) throws Exception {
 
         ObjectMapper objectMapper;
-        switch (Objects.requireNonNull(extension)) {
+        switch (Objects.requireNonNull(format)) {
             case "json" -> {
                 objectMapper = new ObjectMapper();
             }

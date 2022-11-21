@@ -2,10 +2,11 @@ package hexlet.code.formatters;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Plain {
-    public static String render(TreeMap<String, HashMap<String, String>> diff) {
+    public static String render(Map<String, Map<String, String>> diff) {
 
         StringBuilder builder = new StringBuilder();
 
@@ -28,10 +29,12 @@ public class Plain {
                 continue;
             }
 
-            if (!field.equals(diff.lastKey())) {
-                builder.append("\n");
-            }
+//            if (!field.equals(diff.lastKey())) {
+//                builder.append("\n");
+//            }
         }
+
+        builder.append("\n");
 
         return builder.toString().replace("\"", "");
     }
