@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Objects;
 
 public class Differ {
@@ -29,6 +30,11 @@ public class Differ {
         File file = new File(filePath);
 
         return objectMapper.readTree(file);
+    }
+
+    public Map getData(File file) {
+
+        return null;
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
