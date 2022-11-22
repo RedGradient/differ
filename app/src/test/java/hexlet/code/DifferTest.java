@@ -32,10 +32,6 @@ public class DifferTest {
 
     @Test
     public void testDefaultValue() {
-
-        var jsonFilePath1 = resourcesPath + "/fixtures/json/file1.json";
-        var jsonFilePath2 = resourcesPath + "/fixtures/json/file2.json";
-
         assertDoesNotThrow(() -> {
             new CommandLine(new App()).execute(jsonFilePath1, jsonFilePath2);
         });
