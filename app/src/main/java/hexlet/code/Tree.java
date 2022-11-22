@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 public class Tree {
 
-    public static Map build(Map<String, String> map1, Map<String, String> map2) {
+    public static <T extends Map<String, String>> Map build(T map1, T map2) {
 
         TreeSet<String> fields = new TreeSet<>(map1.keySet());
         fields.addAll(map2.keySet());
