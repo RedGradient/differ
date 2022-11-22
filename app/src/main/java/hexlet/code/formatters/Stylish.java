@@ -29,8 +29,8 @@ public class Stylish {
     }
 
     private static String toPrettyString(String text) {
-        var prettyText = text.replace("\"", "");
-        if (prettyText.startsWith("[") || prettyText.startsWith("{")) {
+        var prettyText = text;
+        if (prettyText.startsWith("{")) {
             prettyText = prettyText.replace(":", "=");
         }
         return prettyText;

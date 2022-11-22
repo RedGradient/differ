@@ -37,8 +37,9 @@ public class Plain {
     }
 
     private static String toPrettyString(String json) {
-        if ((json.startsWith("[") && json.endsWith("]"))
-                || (json.startsWith("{") && json.endsWith("}"))) {
+        var isArray = json.startsWith("[") && json.endsWith("]");
+        var isObject = json.startsWith("{") && json.endsWith("}");
+        if (isArray || isObject) {
             return "[complex value]";
         }
 
