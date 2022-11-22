@@ -6,7 +6,7 @@ import java.util.Map;
 public class Plain {
     public static String render(Map<String, Map<String, String>> diff) {
 
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
 
         for (var field : diff.keySet()) {
 
