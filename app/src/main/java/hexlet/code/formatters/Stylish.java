@@ -1,5 +1,6 @@
 package hexlet.code.formatters;
 
+import java.util.List;
 import java.util.Map;
 
 public class Stylish {
@@ -13,13 +14,12 @@ public class Stylish {
                 builder.append(String.format("    %s: %s\n", field, value));
                 continue;
             }
-            if (changes.containsKey("-")) {
-                var value = toPrettyString(changes.get("-"));
-                builder.append(String.format("  - %s: %s\n", field, value));
-            }
-            if (changes.containsKey("+")) {
-                var value = toPrettyString(changes.get("+"));
-                builder.append(String.format("  + %s: %s\n", field, value));
+
+            for (var sign : List.of("-", "+")) {
+                if (changes.containsKey(sign)) {
+                    var value = toPrettyString(changes.get(sign));
+                    builder.append(String.format("  %s %s: %s\n", sign, field, value));
+                }
             }
         }
 
