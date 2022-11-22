@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Stylish {
     public static String render(Map<String, Map<String, String>> diff) {
-        StringBuilder builder = new StringBuilder("{\n");
+        var builder = new StringBuilder("{\n");
         for (var field : diff.keySet()) {
             var changes = diff.get(field);
 
