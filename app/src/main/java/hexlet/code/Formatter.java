@@ -4,16 +4,12 @@ import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
 
 public class Formatter {
     public static String render(Map diff, String formatName) throws Exception {
-        String renderedText = null;
-        switch (formatName) {
-            case "stylish" -> renderedText = Stylish.render(diff);
+        var renderedText = switch (formatName) {
+            case "stylish" -> Stylish.render(diff);
             case "plain" -> Plain.render(diff);
             case "json" -> Json.render(diff);
             default -> {
@@ -21,7 +17,8 @@ public class Formatter {
                         formatName);
                 throw new Exception(message);
             }
-        }
+        };
+
         return renderedText;
     }
 }

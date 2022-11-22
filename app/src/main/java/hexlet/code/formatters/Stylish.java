@@ -1,8 +1,6 @@
 package hexlet.code.formatters;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Stylish {
     public static String render(Map<String, Map<String, String>> diff) {
@@ -33,7 +31,7 @@ public class Stylish {
     private static String toPrettyString(String text) {
         var prettyText = text.replace("\"", "");
         if (prettyText.startsWith("[") || prettyText.startsWith("{")) {
-            prettyText = prettyText.replace(",", ", ").replace(":", "=");
+            prettyText = prettyText.replace(":", "=");
         }
         return prettyText;
     }

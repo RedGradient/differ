@@ -1,59 +1,51 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Objects;
 
 public class Differ {
 
-    public static JsonNode getRootNone(String filePath) throws Exception {
-        String extension = null;
-        if (filePath.contains(".")) {
-            extension = filePath.substring(filePath.indexOf(".") + 1);
+    private static String getFileFormat(File file) {
+        var filePath = file.getPath();
+        if (!filePath.contains(".")) {
+            return null;
         }
-
-        ObjectMapper objectMapper;
-        switch (Objects.requireNonNull(extension)) {
-            case "json" -> {
-                objectMapper = new ObjectMapper();
-            }
-            case "yml", "yaml" -> {
-                objectMapper = new YAMLMapper();
-            }
-            default -> throw new Exception("Unknown extension");
-        }
-
-        File file = new File(filePath);
-
-        return objectMapper.readTree(file);
+        var format = filePath.substring(filePath.lastIndexOf(".") + 1);
+        return format.toLowerCase();
     }
 
-    public Map getData(File file) {
+    private static Map getData(File file) throws Exception {
 
-        return null;
+        var path = Paths.get(file.getPath());
+        var data = Files.readString(path);
+
+        var format = getFileFormat(file);
+        var result = switch (format) {
+            case "json" -> Parser.parseJson(data);
+            case "yml", "yaml" -> Parser.parseYaml(data);
+            default -> throw new Exception("Unsupported format");
+        };
+
+        return result;
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
-
         var formatName = "stylish";
-
-        var node1 = getRootNone(filePath1);
-        var node2 = getRootNone(filePath2);
-
-        var diff = Tree.build(node1, node2);
-        return Formatter.render(diff, formatName);
+        return generate(filePath1, filePath2, formatName);
     }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
-        var node1 = getRootNone(filePath1);
-        var node2 = getRootNone(filePath2);
+        var file1 = new File(filePath1);
+        var file2 = new File(filePath2);
 
-        var diff = Tree.build(node1, node2);
+        var map1 = getData(file1);
+        var map2 = getData(file2);
+
+        var diff = Tree.build(map1, map2);
+
         return Formatter.render(diff, formatName);
     }
 }

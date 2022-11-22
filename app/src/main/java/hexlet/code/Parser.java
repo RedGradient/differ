@@ -3,24 +3,42 @@ package hexlet.code;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Parser {
 
-    public static Map parse(String content, String format) throws Exception {
+    static Map parseJson(String data) throws Exception {
+        var objectMapper = new ObjectMapper();
+        Map<String, Object> dataMap = objectMapper.readValue(data, HashMap.class);
 
-        ObjectMapper objectMapper;
-        switch (Objects.requireNonNull(format)) {
-            case "json" -> {
-                objectMapper = new ObjectMapper();
+        HashMap<String, String> result = new HashMap<>();
+        for (var key : dataMap.keySet()) {
+            var value = dataMap.get(key);
+            try {
+                result.put(key, String.valueOf(value));
+            } catch (Exception e) {
+                throw new Exception("Unexpected object type");
             }
-            case "yml", "yaml" -> {
-                objectMapper = new YAMLMapper();
-            }
-            default -> throw new Exception("Unknown extension");
         }
 
-        return objectMapper.readValue(content, Map.class);
+        return result;
+    }
+
+    static Map parseYaml(String data) throws Exception {
+        var objectMapper = new YAMLMapper();
+        Map<String, Object> dataMap = objectMapper.readValue(data, HashMap.class);
+
+        HashMap<String, String> result = new HashMap<>();
+        for (var key : dataMap.keySet()) {
+            var value = dataMap.get(key);
+            try {
+                result.put(key, String.valueOf(value));
+            } catch (Exception e) {
+                throw new Exception("Unexpected object type");
+            }
+        }
+
+        return result;
     }
 }
