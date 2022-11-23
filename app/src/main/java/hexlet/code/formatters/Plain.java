@@ -10,21 +10,26 @@ public class Plain {
 
         for (var field : diff.keySet()) {
 
-            var changes = diff.get(field);
+            var metaData = diff.get(field);
+            var type = metaData.get("type");
+            switch (type) {
+                case "added" -> {
+                    var value = toPrettyString(metaData.get("value"));
+                    builder.append(String.format("Property '%s' was added with value: %s", field, value));
+                }
 
-            if (changes.containsKey("-") && changes.containsKey("+")) {
-                var oldValue = toPrettyString(changes.get("-"));
-                var newValue = toPrettyString(changes.get("+"));
-                var changeLog = String.format("Property '%s' was updated. From %s to %s",
-                        field, oldValue, newValue);
-                builder.append(changeLog);
-            } else if (changes.containsKey("-")) {
-                builder.append(String.format("Property '%s' was removed", field));
-            } else if (changes.containsKey("+")) {
-                var value = toPrettyString(changes.get("+"));
-                builder.append(String.format("Property '%s' was added with value: %s", field, value));
-            } else {
-                continue;
+                case "deleted" -> builder.append(String.format("Property '%s' was removed", field));
+
+                case "changed" -> {
+                    var oldValue = toPrettyString(metaData.get("value1"));
+                    var newValue = toPrettyString(metaData.get("value2"));
+                    var changeLog = String.format("Property '%s' was updated. From %s to %s",
+                            field, oldValue, newValue);
+                    builder.append(changeLog);
+                }
+                default -> {
+                    continue;
+                }
             }
 
             builder.append("\n");

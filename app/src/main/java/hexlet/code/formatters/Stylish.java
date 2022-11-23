@@ -1,25 +1,42 @@
 package hexlet.code.formatters;
 
-import java.util.List;
 import java.util.Map;
 
 public class Stylish {
     public static String render(Map<String, Map<String, String>> diff) {
         var builder = new StringBuilder("{\n");
-        for (var field : diff.keySet()) {
-            var changes = diff.get(field);
 
-            if (changes.containsKey("=")) {
-                var value = toPrettyString(changes.get("="));
-                builder.append(String.format("    %s: %s\n", field, value));
-                continue;
-            }
+        for (var field: diff.keySet()) {
+            var metaData = diff.get(field);
 
-            for (var sign : List.of("-", "+")) {
-                if (changes.containsKey(sign)) {
-                    var value = toPrettyString(changes.get(sign));
-                    builder.append(String.format("  %s %s: %s\n", sign, field, value));
+            var type = metaData.get("type");
+            switch (type) {
+                case "added" -> {
+                    var value = toPrettyString(metaData.get("value"));
+                    var changeLog = String.format("  %s %s: %s\n", "+", field, value);
+                    builder.append(changeLog);
                 }
+
+                case "deleted" -> {
+                    var value = toPrettyString(metaData.get("value"));
+                    var changeLog = String.format("  %s %s: %s\n", "-", field, value);
+                    builder.append(changeLog);
+                }
+
+                case "changed" -> {
+                    var oldValue = toPrettyString(metaData.get("value1"));
+                    var newValue = toPrettyString(metaData.get("value2"));
+                    var changeLog1 = String.format("  %s %s: %s\n", "-", field, oldValue);
+                    var changeLog2 = String.format("  %s %s: %s\n", "+", field, newValue);
+                    builder.append(changeLog1);
+                    builder.append(changeLog2);
+                }
+                case "unchanged" -> {
+                    var value = toPrettyString(metaData.get("value"));
+                    var changeLog = String.format("  %s %s: %s\n", " ", field, value);
+                    builder.append(changeLog);
+                }
+                default -> throw new RuntimeException();
             }
         }
 

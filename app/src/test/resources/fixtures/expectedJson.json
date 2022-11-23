@@ -1,55 +1,70 @@
 {
   "chars1" : {
-    "=" : "[a, b, c]"
+    "type" : "unchanged",
+    "value" : "[a, b, c]"
   },
   "chars2" : {
-    "+" : "false",
-    "-" : "[d, e, f]"
+    "type" : "changed",
+    "value1" : "[d, e, f]",
+    "value2" : "false"
   },
   "checked" : {
-    "+" : "true",
-    "-" : "false"
+    "type" : "changed",
+    "value1" : "false",
+    "value2" : "true"
   },
   "default" : {
-    "+" : "[value1, value2]",
-    "-" : "null"
+    "type" : "changed",
+    "value1" : "null",
+    "value2" : "[value1, value2]"
   },
   "id" : {
-    "+" : "null",
-    "-" : "45"
+    "type" : "changed",
+    "value1" : "45",
+    "value2" : "null"
   },
   "key1" : {
-    "-" : "value1"
+    "type" : "deleted",
+    "value" : "value1"
   },
   "key2" : {
-    "+" : "value2"
+    "type" : "added",
+    "value" : "value2"
   },
   "numbers1" : {
-    "=" : "[1, 2, 3, 4]"
+    "type" : "unchanged",
+    "value" : "[1, 2, 3, 4]"
   },
   "numbers2" : {
-    "+" : "[22, 33, 44, 55]",
-    "-" : "[2, 3, 4, 5]"
+    "type" : "changed",
+    "value1" : "[2, 3, 4, 5]",
+    "value2" : "[22, 33, 44, 55]"
   },
   "numbers3" : {
-    "-" : "[3, 4, 5]"
+    "type" : "deleted",
+    "value" : "[3, 4, 5]"
   },
   "numbers4" : {
-    "+" : "[4, 5, 6]"
+    "type" : "added",
+    "value" : "[4, 5, 6]"
   },
   "obj1" : {
-    "+" : "{nestedKey=value, isNested=true}"
+    "type" : "added",
+    "value" : "{nestedKey=value, isNested=true}"
   },
   "setting1" : {
-    "+" : "Another value",
-    "-" : "Some value"
+    "type" : "changed",
+    "value1" : "Some value",
+    "value2" : "Another value"
   },
   "setting2" : {
-    "+" : "300",
-    "-" : "200"
+    "type" : "changed",
+    "value1" : "200",
+    "value2" : "300"
   },
   "setting3" : {
-    "+" : "none",
-    "-" : "true"
+    "type" : "changed",
+    "value1" : "true",
+    "value2" : "none"
   }
 }

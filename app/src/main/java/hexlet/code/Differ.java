@@ -2,7 +2,6 @@ package hexlet.code;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 public class Differ {
@@ -10,39 +9,31 @@ public class Differ {
     private static String getFileFormat(File file) {
         var filePath = file.getPath();
         if (!filePath.contains(".")) {
-            return null;
+            return "";
         }
-        var format = filePath.substring(filePath.lastIndexOf(".") + 1);
+        var lastIndexOfDot = filePath.lastIndexOf(".") + 1;
+        var format = filePath.substring(lastIndexOfDot);
+
         return format.toLowerCase();
     }
 
-    private static Map getData(File file) throws Exception {
+    private static Map getData(String filePath) throws Exception {
 
-        var path = Paths.get(file.getPath());
-        var data = Files.readString(path);
+        var file = new File(filePath);
+        var data = Files.readString(file.toPath());
 
         var format = getFileFormat(file);
-        var result = switch (format) {
-            case "json" -> Parser.parseJson(data);
-            case "yml", "yaml" -> Parser.parseYaml(data);
-            default -> throw new Exception("Unsupported format");
-        };
-
-        return result;
+        return Parser.parse(data, format);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
-        var formatName = "stylish";
-        return generate(filePath1, filePath2, formatName);
+        return generate(filePath1, filePath2, "stylish");
     }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
 
-        var file1 = new File(filePath1);
-        var file2 = new File(filePath2);
-
-        var map1 = getData(file1);
-        var map2 = getData(file2);
+        var map1 = getData(filePath1);
+        var map2 = getData(filePath2);
 
         var diff = Tree.build(map1, map2);
 
